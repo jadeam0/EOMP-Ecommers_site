@@ -84,7 +84,7 @@ button {
     margin-top: 0px;
    }
 
-   .row {
+   .cate {
     height: 714px;
    }
 
@@ -92,7 +92,7 @@ button {
     .home-landing{
         height: auto;
     }
-    .row{
+    .cate{
         height: auto;
         margin: 40px;
     }
@@ -120,3 +120,43 @@ button {
     color:#1f1c1d;
     background-color: #f0a2fd;
   }
+
+  /* contact form */
+  /* ------------------------------------------------------------------------------------------- */
+  .contact{
+    height: 714px;
+  }
+
+  .con {
+    background: #00C853 ;
+    height: 87vh;
+  }
+
+  @media only screen and (max-width: 1000px) {
+    img {
+        width: 300px;
+        height: auto;
+    }
+    .con {
+        height: auto;
+    }
+  }
+
+  @media only screen and (max-width: 780px) {
+    img {
+        width: 600px;
+    }
+  }
+
+  @media only screen and (max-width: 650px) {
+    img {
+        width: 480px;
+    }
+  }
+
+  @media only screen and (max-width: 480px) {
+    img{
+        width: 300px;
+    }
+  }
+    
