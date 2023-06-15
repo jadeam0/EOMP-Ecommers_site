@@ -174,7 +174,7 @@ function addProduct() {
        let category= document.getElementById("Category").value;
     
     console.log(newProduct);
-    products.push(newProduct);
+    products.push(id, name, image, price, quantity, category);
     localStorage.setItem("products", JSON.stringify(products));
     let table = document.querySelector(".productInfo");
     table.innerHTML = "";
@@ -182,7 +182,7 @@ function addProduct() {
         table.innerHTML += `
         <tbody>
         <tr>
-        <td>${data.id.value}</td>
+        <td>${data.id}</td>
         <td>${data.name}</td>
         <td><img src="${data.image}" width="100px" height="100px"</td>
         <td>${data.price}</td>
