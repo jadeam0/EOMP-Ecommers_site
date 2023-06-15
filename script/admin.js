@@ -165,16 +165,16 @@ function displayProductItems() {
 // }
 displayProductItems()
 function addProduct() {
-    let Value = {
-        id: +document.getElementById("Id").value,
-        name: document.getElementById("Name").value,
-        image: document.getElementById("Preview"),
-        price: document.getElementById("Price").value,
-        quantity: document.getElementById("Quantity").value,
-        category: document.getElementById("Category").value,
-    };
-    console.log(Value);
-    products.push(Value);
+
+       let id= document.getElementById("Id").value;
+       let name= document.getElementById("Name").value;
+       let image= document.getElementById("Preview");
+       let price= document.getElementById("Price").value;
+       let quantity= document.getElementById("Quantity").value;
+       let category= document.getElementById("Category").value;
+    
+    console.log(newProduct);
+    products.push(newProduct);
     localStorage.setItem("products", JSON.stringify(products));
     let table = document.querySelector(".productInfo");
     table.innerHTML = "";
@@ -182,7 +182,7 @@ function addProduct() {
         table.innerHTML += `
         <tbody>
         <tr>
-        <td>${data.id}</td>
+        <td>${data.id.value}</td>
         <td>${data.name}</td>
         <td><img src="${data.image}" width="100px" height="100px"</td>
         <td>${data.price}</td>
