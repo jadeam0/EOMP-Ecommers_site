@@ -1,4 +1,17 @@
-const products = [
+let cartContainerEl = document.querySelector(".cart_container");
+let closeCartEl = document.querySelector("#close_icon");
+let cartProductEl = document.querySelector(".cart_products");
+let totalPriceEl = document.querySelector(".totalPrice");
+let btnClear = document.querySelector(".btn_clear");
+// cartEl.addEventListener("click", () => {
+//     cartContainerEl.classList.add("active")
+// })
+
+closeCartEl.addEventListener("click", () => {
+    cartContainerEl.classList.remove("active")
+});
+
+let products = [
     {
         id: 1,
         image: "https://i.postimg.cc/PfDkpyLs/id-1.jpg",
@@ -140,17 +153,23 @@ function productsDisplay() {
     //Figurines
     products.forEach((product) => {
         if (product.category == "Figurines") {
-            const ourFigurines = document.getElementById("figurines")
-            const elementProduct = document.createElement("div")
+            let ourFigurines = document.getElementById("figurines")
+            let elementProduct = document.createElement("div")
             elementProduct.innerHTML = `
-            <div class="card" style="width: 18rem;">
-            <img src="${product.image}" class="card-img-top" alt="...">
-            <div class="card-body">
-            <h5 class="card-title fs-5">${product.name}</h5>
-            <p class="fs-5">R ${product.price}</p>
-            <button onclick="cartPush(${product.id})" class="p-0">Add to Cart</button>
+            <div class="col">
+      <div class="card shadow-sm">
+        <img class="bd-placeholder-img card-img-top" width="90%%" height="350" src="${product.image}" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"></img>
+        <div class="card-body">
+          <h5 class="card-title fs-5">${product.name}</h5>
+          <p class="card-text fs-6">R ${product.price}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+              <button id="addToCart" onclick="addToCart(${product.id})" class="p-0">Add to Cart</button>
             </div>
-            </div>
+          </div>
+        </div>
+      </div>
+    </div>
             `;
             ourFigurines.appendChild(elementProduct);
         }
@@ -159,17 +178,23 @@ function productsDisplay() {
     // Plushies
     products.forEach((product) => {
         if (product.category == "Plushies") {
-            const ourPlushies = document.getElementById("plushies")
-            const elementProduct = document.createElement("div")
+            let ourPlushies = document.getElementById("plushies")
+            let elementProduct = document.createElement("div")
             elementProduct.innerHTML = `
-            <div class="card" style="width: 18rem;">
-            <img src="${product.image}" class="card-img-top" alt="...">
-            <div class="card-body">
-            <h5 class="card-title fs-5">${product.name}</h5>
-            <p class="fs-5">R ${product.price}</p>
-            <button onclick="cartPush(${product.id})" class="p-0">Add to Cart</button>
+            <div class="col">
+      <div class="card shadow-sm">
+        <img class="bd-placeholder-img card-img-top" width="90%%" height="350" src="${product.image}" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"></img>
+        <div class="card-body">
+          <h5 class="card-title fs-5">${product.name}</h5>
+          <p class="card-text fs-6">R ${product.price}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+              <button id="addToCart" onclick="addToCart(${product.id})" class="p-0">Add to Cart</button>
             </div>
-            </div>
+          </div>
+        </div>
+      </div>
+    </div>
             `;
             ourPlushies.appendChild(elementProduct);
         }
@@ -178,21 +203,75 @@ function productsDisplay() {
     // Habitates
     products.forEach((product) => {
         if (product.category == "Habitats") {
-            const ourHabitates = document.getElementById("habitats")
-            const elementProduct = document.createElement("div")
+            let ourHabitates = document.getElementById("habitats")
+            let elementProduct = document.createElement("div")
             elementProduct.innerHTML = `
-            <div class="card " style="width: 18rem;">
-            <img src="${product.image}" class="card-img-top" alt="..." =style="height: 600px;">
-            <div class="card-body">
-            <h5 class="card-title fs-5">${product.name}</h5>
-            <p class="fs-5">R ${product.price}</p>
-            <button onclick="cartPush(${product.id})" class="p-0">Add to Cart</button>
+            <div class="col">
+      <div class="card shadow-sm">
+        <img class="bd-placeholder-img card-img-top" width="90%%" height="350" src="${product.image}" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"></img>
+        <div class="card-body">
+          <h5 class="card-title fs-5">${product.name}</h5>
+          <p class="card-text fs-6">R ${product.price}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+              <button id="addToCart" onclick="addToCart(${product.id})" class="p-0">Add to Cart</button>
             </div>
-            </div>
+          </div>
+        </div>
+      </div>
+    </div>
             `;
             ourHabitates.appendChild(elementProduct);
         }
     })
+}
+
+
+let cart = JSON.parse(localStorage.getItem("productsId")) || [];
+// let cart = JSON.parse(localStorage.getItem("cart")) || [];
+function addToCart(productId) {
+    let product = products.find((product) => product.id === productId);
+    if (product) {
+        cart.push(product);
+        updateCart();
+    }
+}
+function deleteFromCart(index) {
+    let deletedProduct = cart.splice(index, 1)[0];
+    deletedProduct.quantity++;
+    updateCart();
+}
+function updateCart() {
+    let cartContainer = document.getElementById("cart-body");
+    localStorage.setItem("products", JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));
+    cartContainer.innerHTML = "";
+    cart.forEach((product, index) => {
+        let cartProduct = document.createElement("div");
+        cartProduct.innerHTML = `
+        <span>${product.name}</span>
+        <span>${product.price}</span>
+        <input type="number" placeholder="1" min="1" width="50px" height="40px">
+        <p>Total ${product.price}</p>
+        <button onclick="deleteFromCart(${index})" class="delbtn">Delete</button>`;
+        cartContainer.appendChild(cartProduct);
+    });
+    calculateTotal();
+}
+function calculateTotal() {
+    let totalElement = document.getElementById("total");
+    let total = 0
+    cart.forEach(item => {
+      total +=  eval(item.price)
+    })
+    totalElement.textContent = `${total}`;
+}
+function clearCheckoutCart() {
+    let modalFooter = document.querySelector(".modal-footer");
+    modalFooter.innerHTML = `
+    <h4>Thank You! Your Order Has Been Processed!</h4>`;
+    cart = [];
+    updateCart();
 }
 
 productsDisplay()
