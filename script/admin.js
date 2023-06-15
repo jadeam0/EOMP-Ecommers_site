@@ -177,7 +177,7 @@ function addProduct() {
     products.push(Value);
     localStorage.setItem("products", JSON.stringify(products));
     let table = document.querySelector(".productInfo");
-    // table.innerHTML = "";
+    table.innerHTML = "";
     products.forEach((data) => {
         table.innerHTML += `
         <tbody>
